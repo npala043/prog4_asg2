@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Asg2">
         <activity
+            android:name=".CreateItem"
+            android:exported="false" />
+        <activity
+            android:name=".SearchResults"
+            android:exported="false" />
+        <activity
+            android:name=".ItemPage"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
