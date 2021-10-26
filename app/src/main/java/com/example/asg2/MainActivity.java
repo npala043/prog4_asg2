@@ -37,10 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             InputStream inputStream = getResources().openRawResource(getResources().getIdentifier(filePath, "raw", getPackageName()));
             Scanner reader = new Scanner(inputStream);
-            Log.d("MainActivity - fileRead", ""+reader.hasNextLine());
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                Log.i("MainActivity - fileRead",""+line);
                 fileArr.add(line);
             }
             reader.close();
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch(IOException ignore) {
             Log.e("MainActivity - fileRead","File " + filePath + " not found. Error in fileRead() method.");
         }
-        Log.d("MainActivity", fileArr.get(0));
         return fileArr;
     }
 }
