@@ -31,7 +31,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    // Am I even doing this right?
+    /**
+     *
+     * @param filePath: This is the file path without the '.txt' extension.
+     *
+     * @return ArrayList<String>: Returns an ArrayList of String;
+     *      Will be converted to ArrayList<Items> once items has been uploaded.
+     */
     public ArrayList<String> fileRead(String filePath) {
         ArrayList<String> fileArr = new ArrayList<>();
         try {
