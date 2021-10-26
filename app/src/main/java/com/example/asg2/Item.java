@@ -8,9 +8,6 @@ public class Item {
     private double cost;
     private int suppId;
 
-
-
-
     public Item(int id, String name, int quantity, double cost, int suppId) {
         this.id = id;
         this.name = name;
