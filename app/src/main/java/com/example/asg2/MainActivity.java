@@ -2,19 +2,12 @@ package com.example.asg2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -27,13 +20,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<Item> itemList = new ArrayList<>(); // replace once readFile() is complete
 
         // dummy arraylist fill
-        for(int i = 0; i <= 15; i++) {
+        for(int i = 0; i < 15; i++) {
             Item item = new Item(i, "Item " + i, 0, 0, 0);
             itemList.add(item);
         }
-
         generateListView(itemList);
-
     }
 
     @Override
@@ -42,19 +33,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void generateListView(ArrayList<Item> itemList) {
-        ListView mainList = (ListView) findViewById(R.id.mainList);
+        ListView mainList = findViewById(R.id.mainList);
+
+        // Facilitates custom creation of ListView from ArrayList
         ItemsAdapter adapter = new ItemsAdapter(this, itemList);
         mainList.setAdapter(adapter);
 
-        mainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Click listener for each item in ListView
+        // Original code from StackOverflow, refactored to match this project and converted to lambda expression
+        mainList.setOnItemClickListener((parent, view, position, id) -> {
+            Item item = adapter.getItem(position);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Item item = adapter.getItem(position);
+            Bundle b = new Bundle();
+            b.putSerializable("item", item);
 
-                Intent intent = new Intent(MainActivity.this, ItemPage.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, ItemPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
         });
     }
 

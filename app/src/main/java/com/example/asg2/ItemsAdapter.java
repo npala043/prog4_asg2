@@ -1,3 +1,5 @@
+// Originally taken from StackOverflow, refactored to fit our needs
+
 package com.example.asg2;
 
 import android.content.Context;
