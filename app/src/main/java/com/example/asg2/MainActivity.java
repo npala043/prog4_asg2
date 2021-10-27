@@ -62,24 +62,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(MainActivity.this, ItemPage.class);
             intent.putExtras(b);
             startActivity(intent);
+
+            //TEST
+            fileRead("text");
+
         });
     }
 
     /**
      *  Can call like so: fileRead("items");
-     * @param filePath: This is the file path without the '.txt' extension.
+     * @param filePath: This is the file name in the '/res/raw' folder without the '.txt' extension.
      *
      * @return ArrayList<String>: Returns an ArrayList of String;
      *      Will be converted to ArrayList<Items> once items has been uploaded.
      */
-    public ArrayList<String> fileRead(String filePath) {
-        ArrayList<String> fileArr = new ArrayList<>();
+    public ArrayList<Item> fileRead(String filePath) {
+        ArrayList<Item> fileArr = new ArrayList<>();
+        String[] split;
+        Item item;
+        int id;
+        String name;
+        int quantity;
+        double cost;
+        int suppId;
+
         try {
             InputStream inputStream = getResources().openRawResource(getResources().getIdentifier(filePath, "raw", getPackageName()));
             Scanner reader = new Scanner(inputStream);
             while (reader.hasNextLine()) {
                 String line = reader.nextLine();
-                fileArr.add(line);
+                split = line.split(";");
+                // Fill in all the variables with the parsed values form the 'split' Array
+                id = Integer.parseInt(split[0]);
+                name = split[1];
+                quantity = Integer.parseInt(split[2]);
+                cost = Double.parseDouble(split[3]);
+                suppId = Integer.parseInt(split[4]);
+
+                item = new Item(id, name, quantity, cost,suppId);
+                fileArr.add(item);
             }
             reader.close();
             inputStream.close();
