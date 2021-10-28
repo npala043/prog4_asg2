@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
