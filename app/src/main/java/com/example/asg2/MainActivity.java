@@ -3,19 +3,13 @@ package com.example.asg2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,9 +77,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             InputStream inputStream = getResources().openRawResource(getResources().getIdentifier(filePath, "raw", getPackageName()));
-            Scanner reader = new Scanner(inputStream);
-            while (reader.hasNextLine()) {
-                String line = reader.nextLine();
+            Scanner scanner = new Scanner(inputStream);
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
                 split = line.split(";");
                 // Fill in all the variables with the parsed values form the 'split' Array
                 id = Integer.parseInt(split[0]);
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 item = new Item(id, name, quantity, cost,suppId);
                 fileArr.add(item);
             }
-            reader.close();
+            scanner.close();
             inputStream.close();
         } catch(IOException ignore) {
             Log.e("MainActivity - fileRead","File " + filePath + " not found. Error in fileRead() method.");
