@@ -21,13 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        ArrayList<Item> itemList = new ArrayList<>(); // replace once readFile() is complete
-
-        // dummy arraylist fill
-        for(int i = 0; i < 15; i++) {
-            Item item = new Item(i, "Item " + i, 0, 0, 0);
-            itemList.add(item);
-        }
+        ArrayList<Item> itemList = readItems();
         generateListView(itemList);
     }
 
