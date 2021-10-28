@@ -63,21 +63,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.putExtras(b);
             startActivity(intent);
 
-            //TEST
-            fileRead("text");
-
         });
     }
 
     /**
-     *  Can call like so: fileRead("items");
-     * @param filePath: This is the file name in the '/res/raw' folder without the '.txt' extension.
+     *  You can call this method as such:
+     *  ArrayList<Item> testName = readItems();
      *
      * @return ArrayList<String>: Returns an ArrayList of String;
      *      Will be converted to ArrayList<Items> once items has been uploaded.
      */
-    public ArrayList<Item> fileRead(String filePath) {
+    public ArrayList<Item> readItems() {
         ArrayList<Item> fileArr = new ArrayList<>();
+        String filePath = "items";
         String[] split;
         Item item;
         int id;
