@@ -30,6 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * This method will rewrite the ListView with the supplied ArrayList<Item>. When a ListView
+     * item is clicked, it will be passed along to its corresponding ItemPage through an onClick listener
+     *
+     * @param itemList: ArrayList of Item objects which will populate the ListView
+     */
     private void generateListView(ArrayList<Item> itemList) {
         ListView mainList = findViewById(R.id.mainList);
 
