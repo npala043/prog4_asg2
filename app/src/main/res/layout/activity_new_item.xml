@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewItemActivity"
+    tools:context=".CreateItem"
     android:orientation="vertical"
     android:gravity="center">
 
@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please Enter the Item ID"
-        android:text_size="18sp"/>
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/itemID"
@@ -31,11 +31,24 @@
         android:inputType="number" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please Enter the Item Name"
+        android:textSize="18sp"/>
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text" />
+
+    <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please Enter the Item Quantity"
-        android:text_size="18sp"/>
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/itemQuantity"
@@ -48,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please Enter the Item Cost"
-        android:text_size="18sp"/>
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/itemCost"
@@ -61,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Please Enter the Supplier ID"
-        android:text_size="18sp"/>
+        android:textSize="18sp"/>
 
     <EditText
         android:id="@+id/supplierID"
@@ -71,6 +84,7 @@
 
     <Button
         android:id="@+id/returnButton"
+        android:text="Submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="returnValues"/>
