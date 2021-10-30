@@ -25,6 +25,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         generateListView(itemList);
     }
 
+    /**
+     * This method is called when the New Item button is clicked and takes users to a second page
+     *
+     * @param v
+     */
+    @Override
+    public void newItemClick(View v){
+        Intent intent = new Intent(MainActivity.this, ItemPage.class);
+        startActivityForResult(intent);
+        //Asks to recieve bundle when activity finishes
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle b = data.getExtras();
+        int id = b.getInt("id", ID);
+        String name = b.getString("name", name);
+        int quantity = .getInt("quantity",quantity);
+        double cost = b.getDouble("cost", cost);
+        int supID = b.getInt("supId", supID);
+
+        Item newItem = new Item(id, name, quantity, cost, supID);
+        //write newItem to the file
+        writeItem(newItem);
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -56,6 +83,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         });
     }
+
+    /**
+     * Appends an item to the end of the file
+     * Converts the item to a line
+     * Then opens the raw file
+     * Then writes the line to the file
+     */
+    public void writeItem(item){
+
+        String itemLine = item.id+";"+item.name+";"+item.quantity+";"+item.cost+";"+item.suppId;
+
+        FileOutputStream fOut = openFileOutput(getResources().openRawResource(getResources().getIdentifier(filePath, "raw", getPackageName()),  MODE_APPEND);
+        OutputStreamWriter osw = new OutputStreamWriter(fOut);
+        osw.write(itemLine);
+        osw.flush();
+        osw.close();
+    }
+
 
     /**
      *  You can call this method as such:
