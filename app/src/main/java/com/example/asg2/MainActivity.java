@@ -52,7 +52,7 @@ ArrayAdapter<Item> arrayAdapter;
             public boolean onQueryTextChange(String newText) {
                      arrayAdapter.getFilter().filter(newText);
 
-                return false;
+                return true;
             }
         });
 
