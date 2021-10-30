@@ -2,10 +2,14 @@ package com.example.asg2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -19,7 +23,8 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-ArrayAdapter<Item> arrayAdapter;
+    ArrayList<Item> itemList;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,35 +33,25 @@ ArrayAdapter<Item> arrayAdapter;
 
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        ArrayList<Item> itemList = readItems();
+        itemList = readItems();
         generateListView(itemList);
 
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
     }
-@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
-        MenuItem menuItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
 
-
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                     arrayAdapter.getFilter().filter(newText);
-
-                return false;
-            }
-        });
-
-       return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
