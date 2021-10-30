@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<Item> itemList;
-    ArrayAdapter<Item> arrayAdapter;
+   // ArrayAdapter<Item> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
         itemList = readItems();
         generateListView(itemList);
-        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
+      //  arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
-        newList.setAdapter(arrayAdapter);
+     //   newList.setAdapter(arrayAdapter);
 
     }
 
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onQueryTextChange(String newText) {
-arrayAdapter.getFilter().filter(newText);
+//arrayAdapter.getFilter().filter(newText);
 
                 return false;
             }
