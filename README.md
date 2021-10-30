@@ -8,4 +8,4 @@ It primarily functions as a simple inventory management interface; reading in th
 - Running the application on an emulator (or by hooking up your own phone to your computer) will display the homepage. 
 - The searchbar will generate a new inventory list based on the user query.
 - The inventory list is scrollable interactive: tapping on an item will open that item's page
-- DESCRIBE ADD-NEW-ITEM FUNCTIONALITY HERE
+- Tapping the Add Item will open a new activity and display a series of EditText components for the user to enter in the new item data. Then, the user can tap a button to return the values to MainActivity and writes the contents of the new Item to the file 
