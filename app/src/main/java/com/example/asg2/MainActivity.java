@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             scanner.close();
             inputStream.close();
         } catch(IOException ignore) {
-            Log.e("MainActivity - fileRead","File " + filePath + " not found. Error in fileRead() method.");
+            Log.e("MainActivity - readItems","File " + filePath + " not found. Error in fileRead() method.");
         }
         return fileArr;
     }
