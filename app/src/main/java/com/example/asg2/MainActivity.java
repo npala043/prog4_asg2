@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +17,43 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private ArrayList<Item> itemsList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        ArrayList<Item> itemList = readItems();
-        generateListView(itemList);
+        this.itemsList = readItems();
+        generateListView(this.itemsList);
+    }
+
+    /**
+     * This method is called when the New Item button is clicked and takes users to a second page
+     *
+     * @param v
+     */
+    public void newItemClick(View v){
+        Intent intent = new Intent(MainActivity.this, CreateItem.class);
+        startActivityForResult(intent, 0);
+        //Asks to receive bundle when activity finishes
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle b = data.getExtras();
+        int id = b.getInt("id");
+        String name = b.getString("name");
+        int quantity = b.getInt("quantity");
+        double cost = b.getDouble("cost");
+        int supID = b.getInt("supId");
+
+        Item newItem = new Item(id, name, quantity, cost, supID);
+        //write newItem to the file
+        writeItem(newItem);
+        generateListView(this.itemsList);
     }
 
     @Override
@@ -56,6 +87,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         });
     }
+
+    /**
+     * Instead of writing to the items.txt file (because res is a read-only folder)
+     * we will instead only create new items within the current instance. On reload
+     * newly created items will not persist
+     */
+    public void writeItem(Item item){
+        this.itemsList.add(item);
+
+//        String itemLine = item.getId()+";"+item.getName()+";"+item.getQuantity()+";"+item.getCost()+";"+item.getSuppId();
+//        FileOutputStream fOut = openFileOutput(getResources().openRawResource(getResources().getIdentifier("items", "raw", getPackageName())), true);
+//        OutputStreamWriter osw = new OutputStreamWriter(fOut);
+//        try {
+//            osw.write(itemLine);
+//            osw.flush();
+//            osw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
 
     /**
      *  You can call this method as such:
