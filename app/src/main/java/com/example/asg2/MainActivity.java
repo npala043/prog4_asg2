@@ -21,13 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        ArrayList<Item> itemList = new ArrayList<>(); // replace once readFile() is complete
-
-        // dummy arraylist fill
-        for(int i = 0; i < 15; i++) {
-            Item item = new Item(i, "Item " + i, 0, 0, 0);
-            itemList.add(item);
-        }
+        ArrayList<Item> itemList = readItems();
         generateListView(itemList);
     }
 
@@ -36,6 +30,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /**
+     * This method will rewrite the ListView with the supplied ArrayList<Item>. When a ListView
+     * item is clicked, it will be passed along to its corresponding ItemPage through an onClick listener
+     *
+     * @param itemList: ArrayList of Item objects which will populate the ListView
+     */
     private void generateListView(ArrayList<Item> itemList) {
         ListView mainList = findViewById(R.id.mainList);
 
