@@ -19,25 +19,22 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ArrayList<Item> itemList;
-   // ArrayAdapter<Item> arrayAdapter;
+ArrayAdapter<Item> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView newList = findViewById(R.id.mainList);
-        // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        itemList = readItems();
-        generateListView(itemList);
-      //  arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
-     //   newList.setAdapter(arrayAdapter);
+        // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
+        ArrayList<Item> itemList = readItems();
+        generateListView(itemList);
+
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
     }
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
 
@@ -46,18 +43,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//arrayAdapter.getFilter().filter(newText);
+                     arrayAdapter.getFilter().filter(newText);
 
                 return false;
             }
         });
 
-    return super.onCreateOptionsMenu(menu);
+       return super.onCreateOptionsMenu(menu);
     }
 
     @Override
