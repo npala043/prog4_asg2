@@ -34,7 +34,7 @@ ArrayAdapter<Item> arrayAdapter;
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
     }
-
+@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
 
@@ -52,7 +52,7 @@ ArrayAdapter<Item> arrayAdapter;
             public boolean onQueryTextChange(String newText) {
                      arrayAdapter.getFilter().filter(newText);
 
-                return true;
+                return false;
             }
         });
 
