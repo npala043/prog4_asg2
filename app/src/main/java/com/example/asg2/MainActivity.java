@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -18,15 +19,21 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    ArrayList<Item> itemList;
+    ArrayAdapter<Item> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ListView mainList = findViewById(R.id.mainList);
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
-        ArrayList<Item> itemList = readItems();
+        itemList = readItems();
         generateListView(itemList);
+        arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
+
+        mainList.setAdapter(arrayAdapter);
 
     }
 
@@ -44,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+arrayAdapter.getFilter().filter(newText);
 
                 return false;
             }
