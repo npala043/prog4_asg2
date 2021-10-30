@@ -27,13 +27,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ListView mainList = findViewById(R.id.mainList);
+        ListView newList = findViewById(R.id.mainList);
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
         itemList = readItems();
         generateListView(itemList);
         arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, itemList);
 
-        mainList.setAdapter(arrayAdapter);
+        newList.setAdapter(arrayAdapter);
 
     }
 
