@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button.setOnClickListener(v -> {
             // Do something in response to button click
 
-            for (int i = 0; i < itemList.size(); i++) {
-                if (itemList.get(i).getName().equals(result)) {
-                    searchList.add(itemList.get(i));
+            for (Item i : itemList) {
+                if (i.getName().equals(result)) {
+                    searchList.add(i);
                 }
             }
         });
