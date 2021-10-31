@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             for (Item i : itemList) {
                 if (i.getName().contains(result)) {
+                    Log.d("MainActivity",""+i.getName());
                     searchList.add(i);
                 }
             }
