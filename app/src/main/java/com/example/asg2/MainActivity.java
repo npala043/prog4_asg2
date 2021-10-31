@@ -37,10 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EditText txtDescription = findViewById(R.id.itemSearch);
         result = txtDescription.getText().toString();
         search();
-
-        if (searchList != null) {
-            generateListView(searchList);
-        }
     }
 
     public void search() {
@@ -51,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if (i.getName().contains(result)) {
                     searchList.add(i);
                 }
+            }
+            if (searchList != null) {
+                generateListView(searchList);
             }
         });
     }
