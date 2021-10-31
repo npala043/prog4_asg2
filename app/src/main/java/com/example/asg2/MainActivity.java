@@ -37,7 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EditText txtDescription = findViewById(R.id.itemSearch);
         result = txtDescription.getText().toString();
         search();
-        generateListView(searchList);
+
+        if (searchList != null) {
+            generateListView(searchList);
+        }
     }
 
     public void search() {
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Do something in response to button click
 
             for (Item i : itemList) {
-                if (i.getName().equals(result)) {
+                if (i.getName().contains(result)) {
                     searchList.add(i);
                 }
             }
