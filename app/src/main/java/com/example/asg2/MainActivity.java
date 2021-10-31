@@ -3,19 +3,14 @@ package com.example.asg2;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import android.app.SearchManager;
-import android.content.Context;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
-
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,7 +19,9 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<Item> itemList;
-    SearchView searchView;
+    Button button;
+    ArrayList<Item> searchList;
+    String result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +32,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
         itemList = readItems();
         generateListView(itemList);
+        button = findViewById(R.id.button);
 
-
+        EditText txtDescription = findViewById(R.id.itemSearch);
+        result = txtDescription.getText().toString();
+        search();
+        generateListView(searchList);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+    public void search() {
+        button.setOnClickListener(v -> {
+            // Do something in response to button click
 
-        return true;
+            for (int i = 0; i < itemList.size(); i++) {
+                if (itemList.get(i).getName().equals(result)) {
+                    searchList.add(itemList.get(i));
+                }
+            }
+        });
     }
+
 
     @Override
     public void onClick(View v) {
