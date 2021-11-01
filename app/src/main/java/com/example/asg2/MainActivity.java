@@ -2,12 +2,15 @@ package com.example.asg2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
-
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
@@ -17,16 +20,49 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    ArrayList<Item> itemList;
+    Button myButton;
+    ArrayList<Item> searchList;
+    String result;
     private ArrayList<Item> itemsList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
+
+        itemList = readItems();
+        searchList = new ArrayList<>();
+        generateListView(itemList);
+        myButton = findViewById(R.id.button);
+
+
+        search();
+
         this.itemsList = readItems();
         generateListView(this.itemsList);
+    }
+
+    public void search() {
+        myButton.setOnClickListener(v -> {
+            searchList.clear();
+            // Do something in response to button click
+            EditText txtDescription = findViewById(R.id.itemSearch);
+            result = txtDescription.getText().toString();
+            for (Item i : itemList) {
+                if (i.getName().contains(result)) {
+                    searchList.add(i);
+                }
+            }
+            generateListView(searchList);
+
+        });
+
     }
 
     /**
@@ -54,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //write newItem to the file
         writeItem(newItem);
         generateListView(this.itemsList);
+
     }
 
     @Override
@@ -65,13 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * This method will rewrite the ListView with the supplied ArrayList<Item>. When a ListView
      * item is clicked, it will be passed along to its corresponding ItemPage through an onClick listener
      *
-     * @param itemList: ArrayList of Item objects which will populate the ListView
+     * @param myList: ArrayList of Item objects which will populate the ListView
      */
-    private void generateListView(ArrayList<Item> itemList) {
+    private void generateListView(ArrayList<Item> myList) {
         ListView mainList = findViewById(R.id.mainList);
-
         // Facilitates custom creation of ListView from ArrayList
-        ItemsAdapter adapter = new ItemsAdapter(this, itemList);
+        ItemsAdapter adapter = new ItemsAdapter(this, myList);
         mainList.setAdapter(adapter);
 
         // Click listener for each item in ListView
@@ -150,4 +186,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return fileArr;
     }
+
 }

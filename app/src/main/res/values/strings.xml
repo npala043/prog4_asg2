@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">asg2</string>
+    <string name="search">Search</string>
+    <string name="ein">Enter Item Name</string>
 </resources>
