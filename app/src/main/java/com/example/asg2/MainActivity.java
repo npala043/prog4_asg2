@@ -19,9 +19,10 @@ import java.util.Scanner;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     ArrayList<Item> itemList;
-    Button button;
+    Button myButton;
     ArrayList<Item> searchList;
     String result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
         itemList = readItems();
+        searchList = new ArrayList<>();
         generateListView(itemList);
-        button = findViewById(R.id.button);
+        myButton = findViewById(R.id.button);
 
         EditText txtDescription = findViewById(R.id.itemSearch);
         result = txtDescription.getText().toString();
@@ -40,21 +42,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void search() {
-        button.setOnClickListener(v -> {
-            // Do something in response to button click
+        myButton.setOnClickListener(v -> {
+                // Do something in response to button click
 
-            for (Item i : itemList) {
-                if (i.getName().contains(result)) {
-                    Log.d("MainActivity",""+i.getName());
-                    searchList.add(i);
+                for (Item i : itemList) {
+                    if (i.getName().contains(result)) {
+                        searchList.add(i);
+                    }
                 }
-            }
-            if (searchList != null) {
                 generateListView(searchList);
-            }
+
         });
     }
-
 
     @Override
     public void onClick(View v) {
@@ -65,13 +64,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * This method will rewrite the ListView with the supplied ArrayList<Item>. When a ListView
      * item is clicked, it will be passed along to its corresponding ItemPage through an onClick listener
      *
-     * @param itemList: ArrayList of Item objects which will populate the ListView
+     * @param myList: ArrayList of Item objects which will populate the ListView
      */
-    private void generateListView(ArrayList<Item> itemList) {
+    private void generateListView(ArrayList<Item> myList) {
         ListView mainList = findViewById(R.id.mainList);
-
         // Facilitates custom creation of ListView from ArrayList
-        ItemsAdapter adapter = new ItemsAdapter(this, itemList);
+        ItemsAdapter adapter = new ItemsAdapter(this, myList);
         mainList.setAdapter(adapter);
 
         // Click listener for each item in ListView
@@ -129,4 +127,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return fileArr;
     }
+
 }
