@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +20,12 @@ import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+
     ArrayList<Item> itemList;
     Button myButton;
     ArrayList<Item> searchList;
     String result;
+    private ArrayList<Item> itemsList = new ArrayList<>();
 
 
     @Override
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         // on MainActivity startup, read items.txt into ArrayList<Item> and call generateListView()
+
         itemList = readItems();
         searchList = new ArrayList<>();
         generateListView(itemList);
@@ -38,22 +43,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         search();
+
+        this.itemsList = readItems();
+        generateListView(this.itemsList);
     }
 
     public void search() {
         myButton.setOnClickListener(v -> {
             searchList.clear();
-                // Do something in response to button click
+            // Do something in response to button click
             EditText txtDescription = findViewById(R.id.itemSearch);
             result = txtDescription.getText().toString();
-                for (Item i : itemList) {
-                    if (i.getName().contains(result)) {
-                        searchList.add(i);
-                    }
+            for (Item i : itemList) {
+                if (i.getName().contains(result)) {
+                    searchList.add(i);
                 }
-                generateListView(searchList);
+            }
+            generateListView(searchList);
 
         });
+
+    }
+
+    /**
+     * This method is called when the New Item button is clicked and takes users to a second page
+     *
+     * @param v
+     */
+    public void newItemClick(View v){
+        Intent intent = new Intent(MainActivity.this, CreateItem.class);
+        startActivityForResult(intent, 0);
+        //Asks to receive bundle when activity finishes
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Bundle b = data.getExtras();
+        int id = b.getInt("id");
+        String name = b.getString("name");
+        int quantity = b.getInt("quantity");
+        double cost = b.getDouble("cost");
+        int supID = b.getInt("supId");
+
+        Item newItem = new Item(id, name, quantity, cost, supID);
+        //write newItem to the file
+        writeItem(newItem);
+        generateListView(this.itemsList);
+
     }
 
     @Override
@@ -86,6 +123,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         });
     }
+
+    /**
+     * Instead of writing to the items.txt file (because res is a read-only folder)
+     * we will instead only create new items within the current instance. On reload
+     * newly created items will not persist
+     */
+    public void writeItem(Item item){
+        this.itemsList.add(item);
+
+//        String itemLine = item.getId()+";"+item.getName()+";"+item.getQuantity()+";"+item.getCost()+";"+item.getSuppId();
+//        FileOutputStream fOut = openFileOutput(getResources().openRawResource(getResources().getIdentifier("items", "raw", getPackageName())), true);
+//        OutputStreamWriter osw = new OutputStreamWriter(fOut);
+//        try {
+//            osw.write(itemLine);
+//            osw.flush();
+//            osw.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+    }
+
 
     /**
      *  You can call this method as such:
