@@ -36,15 +36,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         generateListView(itemList);
         myButton = findViewById(R.id.button);
 
-        EditText txtDescription = findViewById(R.id.itemSearch);
-        result = txtDescription.getText().toString();
+
         search();
     }
 
     public void search() {
         myButton.setOnClickListener(v -> {
+            searchList.clear();
                 // Do something in response to button click
-
+            EditText txtDescription = findViewById(R.id.itemSearch);
+            result = txtDescription.getText().toString();
                 for (Item i : itemList) {
                     if (i.getName().contains(result)) {
                         searchList.add(i);
